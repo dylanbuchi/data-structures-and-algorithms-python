@@ -1,7 +1,3 @@
-import os
-
-os.chdir("./data_structures/arrays")
-
 from my_array import Array
 
 array = Array(capacity=10)

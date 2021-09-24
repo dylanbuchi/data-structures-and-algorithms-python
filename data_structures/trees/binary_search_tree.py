@@ -7,6 +7,40 @@ class BinarySearchTree:
         self.root = None
         self.size = 0
 
+    def is_leaf(self, node):
+        return node.left is node.right is None
+
+    def remove(self, value):
+        def remove_recursively(node, value=value):
+            if node is None:
+                return node
+
+            if value == node.value:
+                # check for one node leaf or one child
+                if self.is_leaf():
+                    return None
+
+                if node.left is None:
+                    return node.right
+
+                if node.right is None:
+                    return node.left
+
+                successor_node_value = self.get_successor_value(node.right)
+                node.value = successor_node_value
+                node.right = remove_recursively(node.right,
+                                                successor_node_value)
+
+            elif value > node.value:
+                node.right = remove_recursively(node.right)
+
+            else:
+                node.left = remove_recursively(node.left)
+
+            return node
+
+        remove_recursively(self.root)
+
     def append(self, value):
         node = Node(value)
 
@@ -33,6 +67,13 @@ class BinarySearchTree:
                     return
 
         self.size += 1
+
+    def get_successor_value(self, node, successor_value=None):
+        if node is None:
+            return successor_value
+        if node:
+            successor_value = node.value
+        return self.get_successor_value(node.left, successor_value)
 
     def search(self, value):
         if self.is_empty():

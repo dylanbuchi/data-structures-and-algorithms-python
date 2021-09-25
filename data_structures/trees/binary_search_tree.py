@@ -17,7 +17,7 @@ class BinarySearchTree:
 
             if value == node.value:
                 # check for one node leaf or one child
-                if self.is_leaf():
+                if self.is_leaf(node):
                     return None
 
                 if node.left is None:

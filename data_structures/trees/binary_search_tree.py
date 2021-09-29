@@ -41,7 +41,7 @@ class BinarySearchTree:
 
         remove_recursively(self.root)
 
-    def append(self, value):
+    def _append_iterative(self, value):
         node = Node(value)
 
         if self.is_empty():
@@ -67,6 +67,24 @@ class BinarySearchTree:
                     return
 
         self.size += 1
+
+    def append(self, value):
+        self.size += 1
+        if self.root is None:
+            self.root = Node(value)
+        else:
+            return self._append_recursively(self.root, value)
+
+    def _append_recursively(self, node, value):
+        if node is None:
+            return Node(value)
+
+        if value > node.value:
+            node.right = self._append_recursively(node.right, value)
+        else:
+            node.left = self._append_recursively(node.left, value)
+
+        return node
 
     def get_successor_value(self, node, successor_value=None):
         if node is None:
